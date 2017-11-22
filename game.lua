@@ -281,7 +281,7 @@ function Player:update(dt)
 			if settings.sound then sfx(7, 12, 60, 3) end
 			self.stage.fuel_blink = true
 			self.stage.state = "game over"
-			pmem(settings.high_score, 2)
+			pmem(2, settings.high_score)
 		end
 	end
 end
@@ -585,7 +585,7 @@ function Game:update(dt)
 					if self.state ~= "game over" then
 						music()
 						if settings.sound then sfx(7, 12, 60, 3) end
-						pmem(settings.high_score, 2)
+						pmem(2, settings.high_score)
 					end
 					self.state="game over"
 				end
