@@ -1,2 +1,2 @@
 #!/bin/sh
-tic antracer.tic -code game.lua -sprites sprites.gif
+tic80 antracer.tic -code-watch game.lua -sprites sprites.gif
