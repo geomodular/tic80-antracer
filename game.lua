@@ -351,7 +351,7 @@ function Menu:update(dt)
 end
 
 function Menu:draw()
-	local y = 64 
+	local y = 64
 	cls(0)
 	map(30,17,30,17,0,-24)
 	print("Let's race", 90, y)
@@ -787,7 +787,7 @@ function Game:draw_ui()
 
 	local speed = 3600 * self.road_vx * 0.1406
 	print(string.format("%03.f", speed), 87, 18, 9, true)
-	local tmps = scale(speed, 40, 260, math.pi, 0)
+	local tmps = scale(speed, 60, 140, math.pi-0.23, math.pi/2)
 	local xs = math.cos(tmps) * 26 + 80 + 15
 	local ys = -math.sin(tmps) * 26 + 31
 	line(80 + 15, 31, xs, ys, 9)
@@ -808,7 +808,7 @@ function TIC()
 	local dt = actual_t - last_t
 
 	--[[ PAUSE HACK ]]--
-	if dt < 500 then 
+	if dt < 500 then
 		sm.update(dt)
 	end
 
