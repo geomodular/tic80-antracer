@@ -3,7 +3,7 @@
 -- desc:   Infinite runner type game made for Slovak rally team red ants
 -- script: lua
 -- input:  gamepad
--- saveid: antracer1
+-- saveid: antracer2
 
 --[[ SETTINGS ]]--
 settings={
@@ -346,7 +346,7 @@ end
 function Intro:draw()
 	self.bg:draw()
 	if self.visible then
-		print("Press x to continue", 66, 64)
+		print("Vyber mincu z vrecka", 66, 64)
 	end
 end
 
@@ -390,11 +390,8 @@ end
 function Menu:draw()
 	local y = 64
 	self.bg:draw()
-	-- cls(0)
-	-- map(30,17,30,17,0,-24)
-	print("Ant RACER", 94, y - 16, 2)
-	print("Let's race", 94, y)
-	print("Settings", 94, y + 8)
+	print("Pome na to!", 94, y)
+	print("Nastavenie", 94, y + 8)
 	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
 end
 
@@ -447,11 +444,11 @@ function Settings:draw()
 	-- cls(0)
 	-- map(30,17,30,17,0,-24)
 	self.bg:draw()
-	print("Music", 94, y)
-	print(settings.music and "ON" or "OFF", 94 + 48, y)
-	print("Sound", 94, y + 8)
-	print(settings.sound and "ON" or "OFF", 94 + 48, y + 8)
-	print("Back", 94, y + 16)
+	print("Hudba", 94, y)
+	print(settings.music and "HEJ" or "NE", 94 + 48, y)
+	print("Zvuk", 94, y + 8)
+	print(settings.sound and "HEJ" or "NE", 94 + 48, y + 8)
+	print("Nazad", 94, y + 16)
 	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
 end
 
@@ -472,20 +469,20 @@ function Tutorial:update(dt)
 	local x2 = 168
 
 	spr(256, 0, 0, 0, 1, 0, 0, 4, 3)
-	print("YOUR CAR", x1, y, 14)
-	print("Red Ant", x1, y + 8)
+	print("TVOJE AUTO", x1, y, 14)
+	print("Cerveny Mravec", x1, y + 8)
 
 	spr(341, 20, y + 8*2 + 6, 0, 1, 0, 0, 2, 2)
-	print("Fuel", x1, y + 8*3, 14)
-	print("Your power", x1, y + 8*4)
+	print("Palivo", x1, y + 8*3, 14)
+	print("Phonna hmota", x1, y + 8*4)
 
 	spr(352, 26, y + 8*5 + 10)
-	print("Energy drink", x1, y + 8*6, 14)
-	print("Your life", x1, y + 8*7)
+	print("Energetak", x1, y + 8*6, 14)
+	print("Tvoj zivot", x1, y + 8*7)
 
 	spr(354, 24, y + 8*8 + 10)
-	print("Oil", x1, y + 8*9, 14)
-	print("Avoid it", x1, y + 8*10)
+	print("Olej", x1, y + 8*9, 14)
+	print("Vyhni sa", x1, y + 8*10)
 	
 	spr(407, 128, 0, 0, 1, 0, 0, 4, 3)
 	print("L. Danda", x2, y, 14)
@@ -600,9 +597,9 @@ function Game:update(dt)
 	self.shaker(dt)
 
 	if self.state == "enter" then
-		print("GET READY", 64, 73, 14, false, 2)
+		print("PRIPRAV SA", 64, 73, 14, false, 2)
 	elseif self.state == "game over" then
-		print("GAME OVER", 64, 73, 14, false, 2)
+		print("KONIEC HRY", 64, 73, 14, false, 2)
 	end
 
 	-- Update
@@ -831,9 +828,9 @@ function Game:draw_ui()
 		map(0, 21, 29, 4)
 	end
 
-	print("high", 8, 2, 3)
+	print("rekord", 8, 2, 3)
 	print(string.format("%06.f m", settings.high_score), 8, 10, 9, true)
-	print("actual", 8, 18, 3)
+	print("skore", 8, 18, 3)
 	print(string.format("%06.f m", self.distance), 8, 26, 9, true)
 
 	for i=1,self.drinks do
