@@ -286,10 +286,41 @@ function Player:update(dt)
 	end
 end
 
+Background={
+	ox={0} -- To ensure fluid motion across screens
+}
+
+function Background:new(o)
+	o = o or {}
+	return setmetatable(o, {__index=self})
+end
+
+function Background:update(dt)
+	self.ox[1] = self.ox[1] - 0.2
+	self.ox[1] = self.ox[1] % 16
+end
+
+function Background:draw()
+	cls(6)
+	for i=0,15 do
+		for j=0,9 do
+			local x = self.ox[1] + i*16 + (j&1)*8
+			local y = j*16
+			circ(x, y, self:almostHann(x, 240) * 13 + 1, 14)
+		end
+	end
+end
+
+function Background:almostHann(i, N)
+	return 0.6 * (1-math.cos(2 * math.pi * i / N))
+end
+
 --[[ INTRO STAGE ]]--
 Intro=Stage:new{
 	t_blink=0,
-	visible=true
+	visible=true,
+	ox=0,
+	bg=Background:new()
 }
 
 function Intro:init()
@@ -297,9 +328,11 @@ function Intro:init()
 end
 
 function Intro:update(dt)
+
+	self.bg:update(dt)
 	self:draw()
 
-	if btnp(5) then
+	if btnp(5) or keyp(50) then
 		sm.switch("menu")
 	end
 
@@ -311,15 +344,18 @@ function Intro:update(dt)
 end
 
 function Intro:draw()
-	cls(0)
+	self.bg:draw()
 	if self.visible then
-		print("Press x to continue", 64, 64)
+		print("Press x to continue", 66, 64)
 	end
 end
 
+
+
 --[[ MENU STAGE]]--
 Menu = Stage:new{
-	p = nil
+	p = nil,
+	bg = Background:new()
 }
 
 function Menu:init()
@@ -328,6 +364,7 @@ function Menu:init()
 end
 
 function Menu:update(dt)
+	self.bg:update()
 	self:draw()
 
 	if btnp(0) then
@@ -336,7 +373,7 @@ function Menu:update(dt)
 	elseif btnp(1) then
 		if settings.sound then sfx(5, 24, -1, 3) end
 		self.p.add()
-	elseif btnp(4) or btnp(5) then
+	elseif btnp(5) or keyp(50) then
 		if settings.sound then sfx(5, 36, -1, 3) end
 		if self.p.pos()==1 then
 			if settings.tutorial then
@@ -352,16 +389,19 @@ end
 
 function Menu:draw()
 	local y = 64
-	cls(0)
-	map(30,17,30,17,0,-24)
-	print("Let's race", 90, y)
-	print("Settings", 90, y + 8)
-	spr(368, 80, (self.p.pos() - 1) * 8 + y - 2)
+	self.bg:draw()
+	-- cls(0)
+	-- map(30,17,30,17,0,-24)
+	print("Ant RACER", 94, y - 16, 2)
+	print("Let's race", 94, y)
+	print("Settings", 94, y + 8)
+	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
 end
 
 --[[ SETTINGS STAGE ]]--
 Settings=Stage:new{
-	p=nil
+	p=nil,
+	bg=Background:new()
 }
 
 function Settings:init()
@@ -369,6 +409,7 @@ function Settings:init()
 end
 
 function Settings:update(dt)
+	self.bg:update(dt)
 	self:draw()
 
 	if btnp(0) then
@@ -377,7 +418,7 @@ function Settings:update(dt)
 	elseif btnp(1) then
 		if settings.sound then sfx(5, 24, -1, 3) end
 		self.p.add()
-	elseif btnp(4) or btnp(5) then
+	elseif btnp(5) or keyp(50) then
 		if settings.sound then sfx(5, 36, -1, 3) end
 		if self.p.pos() == 1  then
 			settings.music = not settings.music
@@ -403,14 +444,15 @@ end
 
 function Settings:draw()
 	local y = 64
-	cls(0)
-	map(30,17,30,17,0,-24)
-	print("Music", 90, y)
-	print(settings.music and "ON" or "OFF", 90 + 48, y)
-	print("Sound", 90, y + 8)
-	print(settings.sound and "ON" or "OFF", 90 + 48, y + 8)
-	print("Back", 90, y + 16)
-	spr(368, 80, (self.p.pos() - 1) * 8 + y - 2)
+	-- cls(0)
+	-- map(30,17,30,17,0,-24)
+	self.bg:draw()
+	print("Music", 94, y)
+	print(settings.music and "ON" or "OFF", 94 + 48, y)
+	print("Sound", 94, y + 8)
+	print(settings.sound and "ON" or "OFF", 94 + 48, y + 8)
+	print("Back", 94, y + 16)
+	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
 end
 
 --[[ TUTORIAL STAGE ]]--
@@ -424,33 +466,42 @@ Tutorial=Stage:new{
 function Tutorial:update(dt)
 	cls(0)
 
+	local x1 = 40
+	local y = 8
+
+	local x2 = 168
+
 	spr(256, 0, 0, 0, 1, 0, 0, 4, 3)
-	print("YOU ARE", 40, 8, 14)
-	print("R. Pravda", 40, 16)
+	print("YOUR CAR", x1, y, 14)
+	print("Red Ant", x1, y + 8)
 
-	spr(407, 0, 24, 0, 1, 0, 0, 4, 3)
-	print("Bye in 1000 m", 40, 32, 14)
-	print("L. Danda", 40, 40)
+	spr(341, 20, y + 8*2 + 6, 0, 1, 0, 0, 2, 2)
+	print("Fuel", x1, y + 8*3, 14)
+	print("Your power", x1, y + 8*4)
 
-	spr(359, 0, 48, 0, 1, 0, 0, 4, 3)
-	print("Bye in 2000 m", 40, 56, 14)
-	print("T. Nekonecny", 40, 64)
+	spr(352, 26, y + 8*5 + 10)
+	print("Energy drink", x1, y + 8*6, 14)
+	print("Your life", x1, y + 8*7)
 
-	spr(311, 0, 72, 0, 1, 0, 0, 4, 3)
-	print("Bye in 3000 m", 40, 80, 14)
-	print("P. Vaglak", 40, 88)
+	spr(354, 24, y + 8*8 + 10)
+	print("Oil", x1, y + 8*9, 14)
+	print("Avoid it", x1, y + 8*10)
+	
+	spr(407, 128, 0, 0, 1, 0, 0, 4, 3)
+	print("L. Danda", x2, y, 14)
+	print("1000 m", x2, y + 8)
 
-	spr(341, 128, 7, 0, 1, 0, 0, 2, 2)
-	print("Take this", 148, 8, 14)
-	print("Fuel", 148, 16)
+	spr(359, 128, y + 8*2, 0, 1, 0, 0, 4, 3)
+	print("T. Nekonecny", x2, y + 8*3, 14)
+	print("2000 m", x2, y + 8*4)
 
-	spr(352, 132, 7 + 24)
-	print("Life", 148, 32, 14)
-	print("Energy drink", 148, 40)
+	spr(311, 128, y + 8*5, 0, 1, 0, 0, 4, 3)
+	print("P. Vaglak", x2, y + 8*6, 14)
+	print("3000 m", x2, y + 8*7)
 
-	spr(354, 132, 56)
-	print("Avoid this", 148, 56, 14)
-	print("Oil", 148, 64)
+	spr(455, 128, y + 8*8, 0, 1, 0, 0, 4, 3)
+	print("K. Jedepecky", x2, y + 8*9, 14)
+	print("4000 m", x2, y + 8*10)
 
 	if self.visible then
 		print("Press", 34, 120)
@@ -514,6 +565,7 @@ Game=Stage:new{
     landa=false,
 	konecny=false,
 	gavlak=false,
+	jedepecky=false,
 	shaker=nil
 }
 
@@ -679,6 +731,16 @@ function Game:update_road(dt)
 					name="gavlak"
 				})
 				self.gavlak = true
+			elseif self.distance > 4000 and self.jedepecky == false then
+				table.insert(self.entities, Car:new{
+					pos=self.road_pos,
+					x=240,
+					y=p[i] + math.random(1, 5) - 2,
+					stage=self,
+					spr=455,
+					name="jedepecky"
+				})
+				self.jedepecky = true
 			else
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
@@ -712,7 +774,7 @@ function Game:update_road(dt)
 					x=240 + math.random(10, 40),
 					y=p[i] + math.random(1, 5) - 2,
 					stage=self,
-                    spr=choose{315, 363, 411, 459}
+          spr=choose{315, 363, 411, 459}
 				})
 			elseif tmp == 13 then
 				table.insert(self.entities, Oil:new{
