@@ -315,6 +315,12 @@ function Background:almostHann(i, N)
 	return 0.6 * (1-math.cos(2 * math.pi * i / N))
 end
 
+function diacritic(x, y, pos, color, ox, oy)
+	ox = ox or 0
+	oy = oy or 0
+	line(x+(pos-1)*6+ox, y-1+oy, x+(pos-1)*6+2+ox, y-2+oy, color)
+end
+
 --[[ INTRO STAGE ]]--
 Intro=Stage:new{
 	t_blink=0,
@@ -346,11 +352,11 @@ end
 function Intro:draw()
 	self.bg:draw()
 	if self.visible then
-		print("Vyber mincu z vrecka", 66, 64)
+		print("Stlac X a pokracuj", 68, 64)
+		diacritic(68, 64, 5, 15)
+		diacritic(68, 64, 15, 15)
 	end
 end
-
-
 
 --[[ MENU STAGE]]--
 Menu = Stage:new{
@@ -390,7 +396,8 @@ end
 function Menu:draw()
 	local y = 64
 	self.bg:draw()
-	print("Pome na to!", 94, y)
+	print("Podme na to!", 94, y)
+	diacritic(94, y, 3, 15)
 	print("Nastavenie", 94, y + 8)
 	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
 end
@@ -470,15 +477,19 @@ function Tutorial:update(dt)
 
 	spr(256, 0, 0, 0, 1, 0, 0, 4, 3)
 	print("TVOJE AUTO", x1, y, 14)
-	print("Cerveny Mravec", x1, y + 8)
+	print("Cerveny Mravec", x1, y + 8, 6)
+	diacritic(x1, y+8, 1, 6, 1, -1)
+	diacritic(x1, y+8, 7, 6, 1)
 
 	spr(341, 20, y + 8*2 + 6, 0, 1, 0, 0, 2, 2)
 	print("Palivo", x1, y + 8*3, 14)
-	print("Phonna hmota", x1, y + 8*4)
+	print("Pohonna hmota", x1, y + 8*4)
+	diacritic(x1, y+8*4, 7, 15, 1)
 
 	spr(352, 26, y + 8*5 + 10)
-	print("Energetak", x1, y + 8*6, 14)
+	print("Energy drink", x1, y + 8*6, 14)
 	print("Tvoj zivot", x1, y + 8*7)
+	diacritic(x1, y+8*7, 6, 15, -2)
 
 	spr(354, 24, y + 8*8 + 10)
 	print("Olej", x1, y + 8*9, 14)
@@ -486,38 +497,42 @@ function Tutorial:update(dt)
 	
 	spr(407, 128, 0, 0, 1, 0, 0, 4, 3)
 	print("L. Danda", x2, y, 14)
-	print("1000 m", x2, y + 8)
+	print("3000 m", x2, y + 8)
 
 	spr(359, 128, y + 8*2, 0, 1, 0, 0, 4, 3)
 	print("T. Nekonecny", x2, y + 8*3, 14)
-	print("2000 m", x2, y + 8*4)
+	print("4000 m", x2, y + 8*4)
 
 	spr(311, 128, y + 8*5, 0, 1, 0, 0, 4, 3)
 	print("P. Vaglak", x2, y + 8*6, 14)
-	print("3000 m", x2, y + 8*7)
+	print("5000 m", x2, y + 8*7)
 
 	spr(455, 128, y + 8*8, 0, 1, 0, 0, 4, 3)
 	print("K. Jedepecky", x2, y + 8*9, 14)
-	print("4000 m", x2, y + 8*10)
+	print("6000 m", x2, y + 8*10)
 
 	if self.visible then
-		print("Press", 34, 120)
+		print("Stlac sipky", 34, 120)
+		diacritic(34, 120, 5, 15)
+		diacritic(34, 120, 7, 15, -1)
+		diacritic(34, 120, 8, 15, -2, 1)
+		
 		if self.up_pressed then
-			print("UP", 34 + 36, 120, 14)
+			print("HORE", 34 + 66, 120, 14)
 		else
-			print("up", 34 + 36, 120)
+			print("hore", 34 + 66, 120)
 		end
-		print("and", 34 + 54, 120)
+		print(",", 34 + 91, 120)
 		if self.down_pressed then
-			print("DOWN", 34 + 78, 120, 14)
+			print("DOLE", 34 + 98, 120, 14)
 		else
-			print("down", 34 + 78, 120)
+			print("dole", 34 + 98, 120)
 		end
-		print("to continue!", 34 + 105, 120)
+		print("a jazdi!", 34 + 125, 120)
 	end
 
 	self.t_blink=self.t_blink+dt
-	if self.t_blink > 500 then
+	if self.t_blink > 600 then
 		self.visible= not self.visible
 		self.t_blink=0
 	end
@@ -542,6 +557,74 @@ function Tutorial:update(dt)
 	end
 end
 
+function Code()
+
+	local index = 0
+	local w = ""
+	local visible = false
+	local blink = false
+	local blink_t = 0
+	local blink_total = 0
+
+	local m = {
+		{117, 90, 212, 57, 150, 15},
+		{93, 108, 48, 47, 144},
+		{11, 94, 83, 42, 177},
+		{131, 127, 34, 123}
+	}
+
+	local k = {
+		{20, 41, 178, 88, 250, 123},
+		{45, 5, 92, 64, 228},
+		{127, 43, 33, 72, 222},
+		{232, 13, 67, 23}
+	}
+
+	function d(v1, v2)
+		local s = ""
+		for i=1,#v1 do s = s .. string.char(v1[i] ~ v2[i]) end
+		return s
+	end
+
+	return {
+		trigger = function()
+			index = index + 1
+			w = d(m[index], k[index])
+			visible = true
+			blink = true
+			blink_t = 0
+			blink_total = 0
+		end,
+
+		update = function(dt)
+			if blink_total > 3000 then
+				visible = true
+				blink = false
+				blink_total = 0
+				if settings.sound then sfx(9, 84, 30, 3) end
+			end
+			if blink then
+				blink_t = blink_t + dt
+				blink_total = blink_total + dt
+				if blink_t > 100 then
+					visible = not visible
+					blink_t = 0
+				end
+			end
+		end,
+
+		draw = function()
+			if w ~= "" then
+				print("tvoj kod", 180, 2, 3)
+				diacritic(180, 2, 7, 3)
+			end
+			if visible==true then
+				print(w, 180, 10, 14)
+			end
+		end
+	}
+end
+
 
 --[[ GAME STAGE ]]--
 Game=Stage:new{
@@ -563,7 +646,8 @@ Game=Stage:new{
 	konecny=false,
 	gavlak=false,
 	jedepecky=false,
-	shaker=nil
+	shaker=nil,
+	code=nil
 }
 
 function Game:init()
@@ -581,6 +665,7 @@ function Game:init()
 	}
 	table.insert(self.entities,self.player)
 	self.shaker = Shaker()
+	self.code = Code()
 end
 
 function Game:shake_it(duration)
@@ -594,6 +679,7 @@ function Game:update(dt)
 	self:draw_road()
 	self:draw_entities()
 	self:draw_ui()
+	self.code.draw()
 	self.shaker(dt)
 
 	if self.state == "enter" then
@@ -605,6 +691,7 @@ function Game:update(dt)
 	-- Update
 	self:update_road(dt)
 	self:update_entities(dt)
+	self.code.update(dt)
 
 	for i,e in pairs(self.entities) do
 		if self.player:overlap(e) then
@@ -627,7 +714,10 @@ function Game:update(dt)
 					if e.alive then
 						self.drinks = self.drinks - 1
 						if settings.sound then sfx(7, 12, 60, 3) end
-						if e.name ~= nil then self:shake_it(800) end
+						if e.name ~= nil then
+							self:shake_it(800)
+							self.code.trigger()
+						end
 					end
 					e.alive = false
 				else
@@ -698,7 +788,7 @@ function Game:update_road(dt)
 			local p={42,64,86}
 			local i=math.random(1,#p)
 
-			if self.distance > 1000 and self.landa == false then
+			if self.distance > 3000 and self.landa == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -708,7 +798,7 @@ function Game:update_road(dt)
 					name="landa"
 				})
 				self.landa = true
-			elseif self.distance > 2000 and self.konecny == false then
+			elseif self.distance > 4000 and self.konecny == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -718,7 +808,7 @@ function Game:update_road(dt)
 					name="konecny"
 				})
 				self.konecny = true
-			elseif self.distance > 3000 and self.gavlak == false then
+			elseif self.distance > 5000 and self.gavlak == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -728,7 +818,7 @@ function Game:update_road(dt)
 					name="gavlak"
 				})
 				self.gavlak = true
-			elseif self.distance > 4000 and self.jedepecky == false then
+			elseif self.distance > 6000 and self.jedepecky == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -831,6 +921,7 @@ function Game:draw_ui()
 	print("rekord", 8, 2, 3)
 	print(string.format("%06.f m", settings.high_score), 8, 10, 9, true)
 	print("skore", 8, 18, 3)
+	diacritic(8, 18, 3, 3, 1)
 	print(string.format("%06.f m", self.distance), 8, 26, 9, true)
 
 	for i=1,self.drinks do
@@ -870,7 +961,7 @@ function TIC()
 	if dt < 500 then
 		sm.update(dt)
 	end
-
+	
 	-- Save time
 	last_t = actual_t
 end

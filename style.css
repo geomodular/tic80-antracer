@@ -1,0 +1,15 @@
+ 
+html { 
+    background: url(bg2.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* IE */
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg2.jpeg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg2.jpeg', sizingMethod='scale')";
+}
+
+section {
+    margin: 1em;
+}
