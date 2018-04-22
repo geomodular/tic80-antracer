@@ -352,9 +352,9 @@ end
 function Intro:draw()
 	self.bg:draw()
 	if self.visible then
-		print("Stlac X a pokracuj", 68, 64, 0)
-		diacritic(68, 64, 5, 0)
-		diacritic(68, 64, 15, 0)
+		print("Stlac ENTER a pokracuj", 58, 64, 0)
+		diacritic(58, 64, 5, 0)
+		diacritic(58, 64, 19, 0)
 	end
 end
 
@@ -748,8 +748,8 @@ function Game:update(dt)
 	end
 
 	if self.state == "game over" then
-		if btnp(4) or btnp(5) then
-			sm.switch("intro")
+		if btnp(5) or keyp(50) then
+			sm.switch("menu")
 		end
 	end
 end
