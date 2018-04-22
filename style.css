@@ -13,3 +13,26 @@ html {
 section {
     margin: 1em;
 }
+
+.black-bg {
+    text-align: center;
+    color: #deeed6;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #140c1c;
+}
+
+.red-bg {
+    text-align: center;
+    color: #deeed6;
+    padding: 1em;
+    background-color: #d04648;
+}
+
+a.cm-link {
+    font-size: 0.8em;
+    color: #deeed6;
+    text-decoration: none;
+}

@@ -352,9 +352,9 @@ end
 function Intro:draw()
 	self.bg:draw()
 	if self.visible then
-		print("Stlac X a pokracuj", 68, 64)
-		diacritic(68, 64, 5, 15)
-		diacritic(68, 64, 15, 15)
+		print("Stlac X a pokracuj", 68, 64, 0)
+		diacritic(68, 64, 5, 0)
+		diacritic(68, 64, 15, 0)
 	end
 end
 
@@ -396,10 +396,10 @@ end
 function Menu:draw()
 	local y = 64
 	self.bg:draw()
-	print("Podme na to!", 94, y)
-	diacritic(94, y, 3, 15)
-	print("Nastavenie", 94, y + 8)
-	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
+	print("Podme na to!", 94, y, 0)
+	diacritic(94, y, 3, 0)
+	print("Nastavenie", 94, y + 8, 0)
+	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 1)
 end
 
 --[[ SETTINGS STAGE ]]--
@@ -451,12 +451,12 @@ function Settings:draw()
 	-- cls(0)
 	-- map(30,17,30,17,0,-24)
 	self.bg:draw()
-	print("Hudba", 94, y)
-	print(settings.music and "HEJ" or "NE", 94 + 48, y)
-	print("Zvuk", 94, y + 8)
-	print(settings.sound and "HEJ" or "NE", 94 + 48, y + 8)
-	print("Nazad", 94, y + 16)
-	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 0)
+	print("Hudba", 94, y, 0)
+	print(settings.music and "HEJ" or "NE", 94 + 48, y, 0)
+	print("Zvuk", 94, y + 8, 0)
+	print(settings.sound and "HEJ" or "NE", 94 + 48, y + 8, 0)
+	print("Nazad", 94, y + 16, 0)
+	spr(368, 84, (self.p.pos() - 1) * 8 + y - 2, 1)
 end
 
 --[[ TUTORIAL STAGE ]]--
@@ -477,19 +477,18 @@ function Tutorial:update(dt)
 
 	spr(256, 0, 0, 0, 1, 0, 0, 4, 3)
 	print("TVOJE AUTO", x1, y, 14)
-	print("Cerveny Mravec", x1, y + 8, 6)
+	print("Cerveny mravec", x1, y + 8, 6)
 	diacritic(x1, y+8, 1, 6, 1, -1)
 	diacritic(x1, y+8, 7, 6, 1)
 
 	spr(341, 20, y + 8*2 + 6, 0, 1, 0, 0, 2, 2)
 	print("Palivo", x1, y + 8*3, 14)
-	print("Pohonna hmota", x1, y + 8*4)
-	diacritic(x1, y+8*4, 7, 15, 1)
+	print("VP Racing Fuel", x1, y + 8*4)
 
 	spr(352, 26, y + 8*5 + 10)
 	print("Energy drink", x1, y + 8*6, 14)
-	print("Tvoj zivot", x1, y + 8*7)
-	diacritic(x1, y+8*7, 6, 15, -2)
+	print("Zivot", x1, y + 8*7)
+	diacritic(x1, y+8*7, 1, 15, 1, -1)
 
 	spr(354, 24, y + 8*8 + 10)
 	print("Olej", x1, y + 8*9, 14)
