@@ -2,7 +2,6 @@
 -- author: @zlatovlas
 -- desc:   Infinite runner type game made for Slovak rally team red ants
 -- script: lua
--- input:  gamepad
 -- saveid: antracer2
 
 --[[ SETTINGS ]]--
@@ -502,8 +501,8 @@ function Tutorial:update(dt)
 	print("T. Nekonecny", x2, y + 8*3, 14)
 	print("4000 m", x2, y + 8*4)
 
-	spr(311, 128, y + 8*5, 0, 1, 0, 0, 4, 3)
-	print("P. Vaglak", x2, y + 8*6, 14)
+	spr(402, 128, y + 8*5, 0, 1, 0, 0, 4, 3)
+	print("G. Bryzg", x2, y + 8*6, 14)
 	print("5000 m", x2, y + 8*7)
 
 	spr(455, 128, y + 8*8, 0, 1, 0, 0, 4, 3)
@@ -643,7 +642,7 @@ Game=Stage:new{
 	fuel_orange=true,
     landa=false,
 	konecny=false,
-	gavlak=false,
+	bryzg=false,
 	jedepecky=false,
 	shaker=nil,
 	code=nil
@@ -807,16 +806,16 @@ function Game:update_road(dt)
 					name="konecny"
 				})
 				self.konecny = true
-			elseif self.distance > 5000 and self.gavlak == false then
+			elseif self.distance > 5000 and self.bryzg == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
 					y=p[i] + math.random(1, 5) - 2,
 					stage=self,
-					spr=311,
-					name="gavlak"
+					spr=402,
+					name="bryzg"
 				})
-				self.gavlak = true
+				self.bryzg = true
 			elseif self.distance > 6000 and self.jedepecky == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
@@ -949,7 +948,7 @@ sm.add("menu", Menu)
 sm.add("settings", Settings)
 sm.add("game", Game)
 sm.add("tutorial", Tutorial)
-sm.switch("intro")
+sm.switch("menu")
 
 last_t = time()
 function TIC()

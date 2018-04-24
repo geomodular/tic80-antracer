@@ -1,0 +1,77 @@
+ 
+html { 
+    background: url(bg.jpeg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* IE */
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpeg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpeg', sizingMethod='scale')";
+}
+
+section {
+    margin: 1em;
+}
+
+.black-bg {
+    text-align: center;
+    color: #deeed6;
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background-color: #140c1c;
+}
+
+.red-bg {
+    text-align: center;
+    color: #deeed6;
+    padding: 1em;
+    background-color: #d04648;
+}
+
+a.cm-link {
+    font-size: 0.8em;
+    color: #deeed6;
+    text-decoration: none;
+}
+
+.game-div {
+    margin: auto;
+    height: 432px;
+    width: 768px;
+    background-color: #140c1c;
+}
+
+#run-button {
+    position: relative;
+    color: #deeed6;
+    background-color: #d04648;
+    width: 128px;
+    height: 32px;
+    margin: -64px -64px;
+    top: 50%;
+    left: 50%;
+}
+
+.loader {
+    position: relative;
+    background-color: #140c1c;
+    border-top: 8px solid #d04648;
+    border-right: 8px solid #dad45e;
+    border-bottom: 8px solid #dad45e;
+    border-left: 8px solid #dad45e;
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    margin: -16px -16px;
+    top: 50%;
+    left: 50%;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
