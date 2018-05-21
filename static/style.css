@@ -1,13 +1,13 @@
  
 html { 
-    background: url(bg.jpeg) no-repeat center center fixed; 
+    background: url(bg.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
     /* IE */
-    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpeg', sizingMethod='scale');
-    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpeg', sizingMethod='scale')";
+    filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpg', sizingMethod='scale');
+    -ms-filter: "progid:DXImageTransform.Microsoft.AlphaImageLoader(src='bg.jpg', sizingMethod='scale')";
 }
 
 section {
