@@ -495,19 +495,19 @@ function Tutorial:update(dt)
 	
 	spr(407, 128, 0, 0, 1, 0, 0, 4, 3)
 	print("L. Danda", x2, y, 14)
-	print("3000 m", x2, y + 8)
+	print("4000 m", x2, y + 8)
 
 	spr(359, 128, y + 8*2, 0, 1, 0, 0, 4, 3)
 	print("T. Nekonecny", x2, y + 8*3, 14)
-	print("4000 m", x2, y + 8*4)
+	print("5000 m", x2, y + 8*4)
 
 	spr(402, 128, y + 8*5, 0, 1, 0, 0, 4, 3)
 	print("G. Bryzg", x2, y + 8*6, 14)
-	print("5000 m", x2, y + 8*7)
+	print("6000 m", x2, y + 8*7)
 
 	spr(455, 128, y + 8*8, 0, 1, 0, 0, 4, 3)
 	print("K. Jedepecky", x2, y + 8*9, 14)
-	print("6000 m", x2, y + 8*10)
+	print("7000 m", x2, y + 8*10)
 
 	if self.visible then
 		print("Stlac sipky", 34, 120)
@@ -565,17 +565,17 @@ function Code()
 	local blink_total = 0
 
 	local m = {
-		{117, 90, 212, 57, 150, 15},
-		{93, 108, 48, 47, 144},
-		{11, 94, 83, 42, 177},
-		{131, 127, 34, 123}
+		{33, 234, 212, 255, 116, 238},
+		{201, 27, 199, 192, 197, 65},
+		{109, 114, 107, 34, 250, 158},
+		{94, 193, 113, 245}
 	}
 
 	local k = {
-		{20, 41, 178, 88, 250, 123},
-		{45, 5, 92, 64, 228},
-		{127, 43, 33, 72, 222},
-		{232, 13, 67, 23}
+		{83, 159, 191, 140, 21, 133},
+		{162, 122, 170, 186, 172, 42},
+		{29, 29, 27, 80, 155, 250},
+		{108, 247, 68, 192}
 	}
 
 	function d(v1, v2)
@@ -786,7 +786,7 @@ function Game:update_road(dt)
 			local p={42,64,86}
 			local i=math.random(1,#p)
 
-			if self.distance > 3000 and self.landa == false then
+			if self.distance > 4000 and self.landa == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -796,7 +796,7 @@ function Game:update_road(dt)
 					name="landa"
 				})
 				self.landa = true
-			elseif self.distance > 4000 and self.konecny == false then
+			elseif self.distance > 5000 and self.konecny == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -806,7 +806,7 @@ function Game:update_road(dt)
 					name="konecny"
 				})
 				self.konecny = true
-			elseif self.distance > 5000 and self.bryzg == false then
+			elseif self.distance > 6000 and self.bryzg == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,
@@ -816,7 +816,7 @@ function Game:update_road(dt)
 					name="bryzg"
 				})
 				self.bryzg = true
-			elseif self.distance > 6000 and self.jedepecky == false then
+			elseif self.distance > 7000 and self.jedepecky == false then
 				table.insert(self.entities, Car:new{
 					pos=self.road_pos,
 					x=240,

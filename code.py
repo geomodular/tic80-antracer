@@ -1,7 +1,7 @@
 import argparse
 import random
 
-def encrypt(code):
+def encrypt(code: str):
     val = []
     key = []
     for a in code:
